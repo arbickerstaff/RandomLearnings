@@ -28,3 +28,17 @@ $content = get-content -path C:\image.png -encoding byte
 $base64 = [System.Convert]::ToBase64String($content)
 $base64 | Out-File C:\encoded.txt
 
+#Get SHA256 hash of file.
+Get-FileHash -Path .\test.txt | Format-List
+
+#Get MD5 hash of file.
+Get-FileHash -Path .\test.txt -Algorithm MD5 | Format-List
+
+# Get date modified of Dlists
+Add-PSSnapin Microsoft.Exchange.Management.PowerShell.Admin
+$list = Get-DistributionGroup -Identity * -ResultSize 5000 | select Displayname, Primarysmtpaddress, WhenChanged 
+Write-Output $list | Out-GridView 
+
+#Get MD5 hash of file.
+Get-FileHash -Path C:\test.txt -Algorithm MD5 | Format-List
+
