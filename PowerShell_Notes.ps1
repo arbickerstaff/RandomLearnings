@@ -42,3 +42,35 @@ Write-Output $list | Out-GridView
 #Get MD5 hash of file.
 Get-FileHash -Path C:\test.txt -Algorithm MD5 | Format-List
 
+#Convert string to get MD5, SHA256 and SHA512 hash for string
+$ConvertString = "Hello World!"
+$utf8 = new-object -TypeName System.Text.UTF8Encoding
+$md5 = new-object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
+$sha256 = new-object -TypeName System.Security.Cryptography.SHA256CryptoServiceProvider
+$sha512 = new-object -TypeName System.Security.Cryptography.SHA512CryptoServiceProvider
+
+$md5hash = [System.BitConverter]::ToString($md5.ComputeHash($utf8.GetBytes($ConvertString)))
+$sha256hash = [System.BitConverter]::ToString($sha256.ComputeHash($utf8.GetBytes($ConvertString)))
+$sha512hash = [System.BitConverter]::ToString($sha512.ComputeHash($utf8.GetBytes($ConvertString)))
+
+Write-Output $md5hash
+Write-Output $sha256hash
+Write-Output $sha512hash
+
+#Convert file to get MD5, SHA256 and SHA512 hash for string
+$ConvertFile = "C:\test.txt"
+$md5 = new-object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
+$sha256 = new-object -TypeName System.Security.Cryptography.SHA256CryptoServiceProvider
+$sha512 = new-object -TypeName System.Security.Cryptography.SHA512CryptoServiceProvider
+
+$md5hash = [System.BitConverter]::ToString($md5.ComputeHash([System.IO.File]::ReadAllBytes($ConvertFile)))
+$sha256hash = [System.BitConverter]::ToString($sha256.ComputeHash([System.IO.File]::ReadAllBytes($ConvertFile)))
+$sha512hash = [System.BitConverter]::ToString($sha512.ComputeHash([System.IO.File]::ReadAllBytes($ConvertFile)))
+
+Write-Output $md5hash
+Write-Output $sha256hash
+Write-Output $sha512hash
+
+
+
+### END ###
